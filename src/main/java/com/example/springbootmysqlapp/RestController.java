@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RestController {
 
     @Autowired
-    CustomerService customerService;
+    CustomerRepository customerRepository;
+
 
     @PostMapping
     public String save(@RequestBody Customer customer){
-        customerService.save(customer);
+        customerRepository.save(customer);
         return  "Success";
     }
     @GetMapping("/{id}")
     public Customer findById(@PathVariable int id){
-        return customerService.findById(id);
+        return customerRepository.findById(id).orElse(null);
     }
 
     @GetMapping
     public Iterable<Customer> findAll(){
-        return customerService.findAll();
+        return customerRepository.findAll();
     }
 }
